@@ -13,6 +13,19 @@ export const metadata: Metadata = {
 	title: 'Jan Žunec',
 	description:
 		'Software developer and UI designer from Slovenia. Building reliable and efficient software. Enthusiast and developer of ethereum identity. Use AI to maximize output.',
+	authors: [{ name: 'Jan Žunec', url: 'https://janzunec.com' }],
+	openGraph: {
+		title: 'Jan Žunec',
+		description:
+			'Software developer and UI designer from Slovenia. Building reliable and efficient software. Enthusiast and developer of ethereum identity. Use AI to maximize output.',
+		images: ['/public/og.png'],
+	},
+	twitter: {
+		title: 'Jan Žunec',
+		description:
+			'Software developer and UI designer from Slovenia. Building reliable and efficient software. Enthusiast and developer of ethereum identity. Use AI to maximize output.',
+		images: '/public/og.png',
+	},
 };
 
 export interface RootLayoutProps {
