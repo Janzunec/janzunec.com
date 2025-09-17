@@ -1,0 +1,108 @@
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import useTheme from '@/app/hooks/useTheme';
+import { NAVIGATION_ITEMS } from '@/app/constants/ui';
+import LogoWhite from '@/public/logos/white-horizontal.svg';
+import LogoBlack from '@/public/logos/black-horizontal.svg';
+import ToggleThemeButton from './theme-button';
+import { usePathname } from 'next/navigation';
+
+const MobileNavigation = () => {
+	const [open, setOpen] = useState(false);
+	const { isDark } = useTheme();
+	const pathname = usePathname();
+
+	const navigationItemClassName =
+		'flex w-56 h-10 items-center bg-green-500 hover:bg-green-600 py-2 text-white font-semibold duration-200 transition-transform transform-gpu before:absolute before:top-0 before:-left-[40px] before:border-[20px] hover:before:border-r-green-600 hover:before:border-t-green-600 before:border-b-transparent before:border-l-transparent  before:border-solid before:border-green-500';
+
+	return (
+		<div
+			className={`${isDark
+				? `dark dark-theme ${pathname === '/' ? 'bg-dot-white/15' : 'bg-black/80'}`
+				: `light-theme ${pathname === '/' ? 'bg-dot-black/20' : 'bg-white/80'}`
+				} lg:hidden left-0 absolute top-0 z-50 w-full navigation-blur`}
+		>
+			<div className='px-4 py-4'>
+				<Link href={'/'}>
+					<Image
+						src={isDark ? LogoWhite : LogoBlack}
+						alt='Web solutions logo'
+						width={128}
+					/>
+				</Link>
+			</div>
+			<div className='flex fixed flex-col top-0 right-0 gap-0 items-end z-50'>
+				<div
+					className={`relative flex group flex-col gap-[3px] overflow-hidden h-20 items-end w-20 px-3 py-4 transform-gpu transition-transform duration-150 ease-out ${open
+						? `translate-y-[160px]`
+						: ' delay-[400ms] translate-y-0 '
+						}`}
+				>
+					<div
+						className='flex flex-col gap-[3px]'
+						onClick={() => setOpen(!open)}
+					>
+						<div
+							className={`h-[3px] w-5 bg-white rounded-full cursor-pointer z-10 transition-all ${open
+								? 'rotate-45 translate-y-[6px]'
+								: 'rotate-0'
+								}`}
+						/>
+						<div
+							className={`h-[3px] w-5 bg-white rounded-full cursor-pointer z-10 transition-all ${open ? 'translate-x-10' : 'translate-x-0'
+								}`}
+						/>
+						<div
+							className={`h-[3px] w-5 bg-white rounded-full cursor-pointer z-10 transition-all ${open
+								? '-rotate-45 -translate-y-[6px]'
+								: 'rotate-0'
+								}`}
+						/>
+					</div>
+					<div
+						className='bg-green-500 cursor-pointer group-hover:bg-green-600 absolute left-0 top-0 translate-x-2 -translate-y-24 h-36 w-36 rotate-45'
+						onClick={() => setOpen(!open)}
+					/>
+				</div>
+				{NAVIGATION_ITEMS.map((item, i) => (
+					<Link
+						key={item.label}
+						href={item.url}
+						className={navigationItemClassName}
+						style={{
+							paddingLeft: 4 - i + 'rem',
+							transform: open
+								? `translate(${26 + i * 40}px, -80px)`
+								: `translate(280px, -80px)`,
+							transitionDelay: open
+								? i * 80 + 'ms'
+								: 240 - i * 80 + 'ms',
+						}}
+						onClick={() => setOpen(false)}
+					>
+						{item.label}
+					</Link>
+				))}
+				<div
+					className={navigationItemClassName}
+					style={{
+						paddingLeft: '1.25rem',
+						transform: open
+							? `translate(${26 + 3 * 40}px, -80px)`
+							: `translate(280px, -80px)`,
+						transitionDelay: open
+							? 3 * 80 + 'ms'
+							: 240 - 3 * 80 + 'ms',
+					}}
+				>
+					<ToggleThemeButton />
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default MobileNavigation;
