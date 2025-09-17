@@ -6,7 +6,13 @@ import Contact from './ui/HomePage/Contact';
 import Details from './ui/HomePage/Details';
 import Feedback from './ui/HomePage/Feedback';
 import Header from './ui/HomePage/Header';
-import { TracingBeam } from './ui/tracing-beam';
+import dynamic from 'next/dynamic';
+
+// Dynamically import TracingBeam with SSR disabled
+const TracingBeam = dynamic(() => import('./ui/tracing-beam').then(mod => ({ default: mod.TracingBeam })), { 
+	ssr: false,
+	loading: () => <div className="relative w-full max-w-content mx-auto h-full px-4 lg:pl-16" />
+});
 
 const Home = () => {
 	const { isDark } = useTheme();

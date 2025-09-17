@@ -1,6 +1,12 @@
 import React from 'react';
-import { TextGenerateEffect } from '../text-generate-effect';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+// Dynamically import TextGenerateEffect with SSR disabled
+const TextGenerateEffect = dynamic(() => import('../text-generate-effect').then(mod => ({ default: mod.TextGenerateEffect })), { 
+	ssr: false,
+	loading: () => <div className="text-lg sm:text-xl xl:w-[90%] w-full sm:w-5/6 md:w-3/4 md:text-2xl font-semibold text-black dark:text-white" />
+});
 
 const Header = () => {
 	const router = useRouter();
@@ -22,7 +28,11 @@ const Header = () => {
 				/>
 				<div className='flex mt-4 gap-4 items-center z-20'>
 					<button
-						onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+						onClick={() => {
+							if (typeof window !== 'undefined') {
+								document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+							}
+						}}
 						className='bg-green-500 h-12 w-32 sm:w-44 font-semibold text-base sm:text-lg text-white rounded-md hover:bg-green-400 transition-all active:scale-95'
 					>
 						Contact Jan

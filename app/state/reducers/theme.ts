@@ -18,11 +18,13 @@ export const themeSlice = createSlice({
 	reducers: {
 		setThemeIsDark(state, { payload }: PayloadAction<boolean>) {
 			state.isDark = payload;
-			localStorage.setItem('theme', payload ? 'dark' : 'light');
-			document.documentElement.setAttribute(
-				'data-theme',
-				payload ? 'dark' : 'light'
-			);
+			if (typeof window !== 'undefined') {
+				localStorage.setItem('theme', payload ? 'dark' : 'light');
+				document.documentElement.setAttribute(
+					'data-theme',
+					payload ? 'dark' : 'light'
+				);
+			}
 		},
 	},
 });

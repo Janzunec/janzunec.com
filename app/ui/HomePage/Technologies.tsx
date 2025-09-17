@@ -19,7 +19,13 @@ import {
 	SiCloudflare,
 
 } from 'react-icons/si';
-import { InfiniteMovingIcons } from '../infinite-moving-icons';
+import dynamic from 'next/dynamic';
+
+// Dynamically import InfiniteMovingIcons with SSR disabled
+const InfiniteMovingIcons = dynamic(() => import('../infinite-moving-icons').then(mod => ({ default: mod.InfiniteMovingIcons })), { 
+	ssr: false,
+	loading: () => <div className="w-full h-16" />
+});
 
 export const ALL_TECHNOLOGIES_ITEMS = [
 	{

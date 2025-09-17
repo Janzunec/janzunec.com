@@ -1,5 +1,7 @@
+'use client';
+
 import { Player } from '@lottiefiles/react-lottie-player';
-import React, { ReactNode, Suspense } from 'react';
+import React, { ReactNode, Suspense, useEffect, useState } from 'react';
 
 export interface LottieAnimationProps {
 	animation: string;
@@ -14,6 +16,16 @@ const LottieAnimation: React.FC<LottieAnimationProps> = ({
 	animationRef,
 	fallback,
 }) => {
+	const [isClient, setIsClient] = useState(false);
+
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
+
+	if (!isClient) {
+		return <>{fallback}</>;
+	}
+
 	return (
 		<Suspense fallback={fallback}>
 			<Player

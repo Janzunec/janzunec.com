@@ -1,9 +1,23 @@
 import React from 'react';
 import { BentoGrid, BentoGridItem } from '../bento-grid';
-import Technologies from './Technologies';
 import Build from './components/Build';
-import Hire from './components/Hire';
-import ProgressiveApps from './components/ProgressiveApps';
+import dynamic from 'next/dynamic';
+
+// Dynamically import components with potential SSR issues
+const Technologies = dynamic(() => import('./Technologies'), { 
+	ssr: false,
+	loading: () => <div className="w-full h-full flex-col justify-center gap-4 items-center z-20 flex bg-transparent" />
+});
+
+const Hire = dynamic(() => import('./components/Hire'), { 
+	ssr: false,
+	loading: () => <div className="w-44 mx-auto lg:w-[60%] md:-translate-y-2 scale-110 overflow-hidden" />
+});
+
+const ProgressiveApps = dynamic(() => import('./components/ProgressiveApps'), { 
+	ssr: false,
+	loading: () => <div className="md:w-full w-64 mx-auto md:mx-0 -translate-x-3 md:scale-110 lg:scale-110 overflow-hidden" />
+});
 
 const Details = () => {
 	return (

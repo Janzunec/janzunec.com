@@ -1,12 +1,10 @@
 'use client';
 
 import React from 'react';
-import LogoWhite from '@/public/logos/white-horizontal.svg';
-import LogoBlack from '@/public/logos/black-horizontal.svg';
 import Link from 'next/link';
 import Image from 'next/image';
-import useTheme from '@/app/hooks/useTheme';
-import { NAVIGATION_ITEMS } from '@/app/constants/ui';
+import useTheme from '../../hooks/useTheme';
+import { NAVIGATION_ITEMS } from '../../constants/ui';
 import { FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
@@ -24,8 +22,10 @@ const Footer = () => {
 			>
 				<Link href={'/'}>
 					<Image
-						src={isDark ? LogoWhite : LogoBlack}
+						src={isDark ? '/logos/white-horizontal.svg' : '/logos/black-horizontal.svg'}
 						alt='Web solutions logo'
+						width={160}
+						height={40}
 						className='w-36 md:w-40 mx-auto md:m-0'
 					/>
 				</Link>

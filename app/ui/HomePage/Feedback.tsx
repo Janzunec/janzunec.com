@@ -1,8 +1,18 @@
 import React from 'react';
-import { InfiniteMovingCards } from '../infinite-moving-cards';
-import { testimonials } from '@/app/constants/ui';
+import { testimonials } from '../../constants/ui';
 import SubHeading from '../sub-heading';
-import { CardStack } from '../card-stack';
+import dynamic from 'next/dynamic';
+
+// Dynamically import animation components with SSR disabled
+const InfiniteMovingCards = dynamic(() => import('../infinite-moving-cards').then(mod => ({ default: mod.InfiniteMovingCards })), { 
+	ssr: false,
+	loading: () => <div className="max-w-content px-4 overflow-hidden" />
+});
+
+const CardStack = dynamic(() => import('../card-stack').then(mod => ({ default: mod.CardStack })), { 
+	ssr: false,
+	loading: () => <div className="relative h-[260px] w-full shadow-xl shadow-green-500/30 rounded-3xl md:h-68 md:w-96" />
+});
 
 const Feedback = () => {
 	return (
